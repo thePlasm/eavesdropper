@@ -1,7 +1,7 @@
 var fs = require('fs');
 var stdin = process.openStdin();
 
-var stimuli = JSON.parse(fs.readFileSync('stimuli.json')).stimuli;
+var stimuli = [];
 var expstimulus = undefined;
 
 function stexists() {
@@ -23,6 +23,7 @@ function reexists(a, mes) {
 }
 
 stdin.addListener("data", function(input) {
+	stimuli = JSON.parse(fs.readFileSync('stimuli.json')).stimuli;
 	if (expstimulus !== undefined) {																	//start of learning code
 		if (stexists()[0]) {																			//stimulus exists
 			lstindex = stexists()[1];

@@ -6,7 +6,7 @@ var fs = require('fs');
 var previd = '';
 var prevmessage = '';
 
-var stimuli = JSON.parse(fs.readFileSync('stimuli.json')).stimuli;
+var stimuli = [];
 
 app.get('/', function(req, res){
 	res.sendFile(__dirname + '/index.html');
@@ -32,6 +32,7 @@ function reexists(a, mes) {
 
 io.on('connection', function(socket){
 	socket.on('chat message', function(msg){
+		stimuli = JSON.parse(fs.readFileSync('stimuli.json')).stimuli;
 		if (previd != socket.id) {												//start of AI code
 			if (prevmessage != '') {											//check to see if it is a response
 				if (stexists()[0]) {											//is an existing stimulus
