@@ -51,6 +51,7 @@ stdin.addListener("data", function(input) {
 		}
 	}																									//end of learning code
 	var stindex = undefined;
+	var reindex = undefined;
 	for (a = 0; a < stimuli.length; a++) {
 		if (stimuli[a].stimulus == input.toString().substring(0, input.length-1).trim()) {
 			stindex = a;
@@ -60,26 +61,11 @@ stdin.addListener("data", function(input) {
 		console.log('');
 	}
 	else {
-		cumuFreqs = [];
+		maxFreq = 0;
 		for (b = 0; b < stimuli[stindex].responses.length; b++) {
-			if (cumuFreqs.length = 0) {
-				cumuFreqs.push(stimuli[stindex].responses[b].frequency);
-			}
-			else {
-				cumuFreqs.push(cumuFreqs[cumuFreqs.length-1] + stimuli[stindex].responses[b].frequency);
-			}
-		}
-		resprand = Math.random() * cumuFreqs[cumuFreqs.length-1];
-		for (k = 0; k < cumuFreqs.length; k++) {
-			if (k > 0) {
-				if (resprand <= cumuFreqs[k] && resprand > cumuFreqs[k - 1]) {
-					reindex = k;
-				}
-			}
-			else {
-				if (resprand <= cumuFreqs && resprand > 0) {
-					reindex = k;
-				}
+			if (stimuli[stindex].responses[b].frequency > maxFreq) {
+				reindex = b;
+				maxFreq = stimuli[stindex].responses[b].frequency;
 			}
 		}
 		console.log(stimuli[stindex].responses[reindex].response);
